@@ -130,3 +130,11 @@ example(of: "creating and linking nodes") {
 ```
 
 您刚刚创建了三个节点并将它们连接起来:
+
+![链表](https://github.com/liwangwang123/Swift-Data/blob/master/images/7FE5712A-9E5E-4130-A12A-C8C0C432AED3.png)
+
+在控制台中，您应该看到以下输出:
+
+---Example of creating and linking nodes--- 1 -> 2 -> 3
+
+就实用性而言，目前的构建列表的方法还有很多需要改进的地方。您可以很容易地看到，以这种方式构建长列表是不切实际的。缓解这个问题的一种常见方法是构建一个管理节点对象的LinkedList。你会那样做的!
