@@ -85,4 +85,8 @@ perple[1]
 * 从列表的前面插入和删除需常数时间。
 * 可靠的性能特征。
 
-![链表](https://github.com/liwangwang123/Swift-Data/blob/master/images/4242962A-C494-4D14-9994-84005DD34261.png)
+![链表](https://github.com/liwangwang123/Swift-Data/blob/master/images/B5B3CAB1-DB73-4374-9358-84C41883C1F0.png)
+
+如图所示，链表是节点链。节点有两个职责:
+* 持有一个值。
+* 保存对下一个节点的引用。空值表示列表的末尾。
