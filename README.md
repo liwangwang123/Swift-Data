@@ -90,3 +90,4 @@ perple[1]
 如图所示，链表是节点链。节点有两个职责:
 * 持有一个值。
 * 保存对下一个节点的引用。空值表示列表的末尾。
+![链表](https://github.com/liwangwang123/Swift-Data/blob/master/images/B5B3CAB1-DB73-4374-9358-84C41883C1F0.png)
