@@ -85,4 +85,4 @@ perple[1]
 * 从列表的前面插入和删除需常数时间。
 * 可靠的性能特征。
 
-
+![链表](https://github.com/liwangwang123/Swift-Data/blob/master/images/4242962A-C494-4D14-9994-84005DD34261.png)
