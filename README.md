@@ -85,4 +85,48 @@ perple[1]
 * 从列表的前面插入和删除需常数时间。
 * 可靠的性能特征。
 
+![链表](https://github.com/liwangwang123/Swift-Data/blob/master/images/B5B3CAB1-DB73-4374-9358-84C41883C1F0.png)
 
+如图所示，链表是节点链。节点有两个职责:
+* 持有一个值。
+* 保存对下一个节点的引用。空值表示列表的末尾。
+
+![链表](https://github.com/liwangwang123/Swift-Data/blob/master/images/4242962A-C494-4D14-9994-84005DD34261.png)
+
+## 节点
+在*Sources*目录中创建一个新的Swift文件，并将其命名为*Node.swift*。将以下内容添加到文件中:
+```
+public class Node<Value> {
+  public var value: Value public var next: Node?
+  public init(value: Value, next: Node? = nil) { 
+    self.value = value
+    self.next = next
+  }
+}
+
+
+extension Node: CustomStringConvertible { 
+  public var description: String {
+    guard let next = next else { 
+      return "\(value)"
+    }
+    return "\(value) -> " + String(describing: next) + " "
+  }
+}
+```
+
+导航到playground页面，并加入以下内容:
+```
+example(of: "creating and linking nodes") { 
+  let node1 = Node(value: 1)
+  let node2 = Node(value: 2) 
+  let node3 = Node(value: 3)
+  
+  node1.next = node2 
+  node2.next = node3
+ 
+  print(node1)
+}
+```
+
+您刚刚创建了三个节点并将它们连接起来:
