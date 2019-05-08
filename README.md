@@ -138,3 +138,125 @@ example(of: "creating and linking nodes") {
 ---Example of creating and linking nodes--- 1 -> 2 -> 3
 
 就实用性而言，目前的构建列表的方法还有很多需要改进的地方。您可以很容易地看到，以这种方式构建长列表是不切实际的。缓解这个问题的一种常见方法是构建一个管理节点对象的LinkedList。你会那样做的!
+
+
+### LinkedList
+
+在Sources目录中，创建一个新文件，并将其命名为LinkedList.swift。将以下内容添加到文件中:
+```
+public struct LinkedList<Value> {
+  public var head: Node<Value>? 
+  public var tail: Node<Value>?
+  public init() {}
+  public var isEmpty: Bool { 
+    return head == nil
+  }
+}
+
+extension LinkedList: CustomStringConvertible { 
+  public var description: String {
+    guard let head = head else { 
+      return "Empty list"
+    }
+   return String(describing: head)
+  }
+}
+```
+链表有头和尾的概念，分别指链表的第一个节点和最后一个节点:
+![列表](https://github.com/liwangwang123/Swift-Data/blob/master/images/703CEF39-5D73-49C8-9002-115A23C61EE4.png)
+
+### 向列表添加值
+如前所述，您将提供一个接口来管理节点对象。首先要处理的是添加值。向链表添加值有三种方法，每种方法都有自己独特的性能特征:
+
+1. push: 在列表的前面添加一个值。
+2. append: 在列表末尾添加一个值。
+3. insert(after:): 在列表的特定节点之后添加值。
+
+在下一节中，您将实现每一个功能，并分析它们的性能特征。
+
+### push
+
+在列表的前面添加值称为 *push* 操作。这也被称为头先插入。它的代码非常简单。
+
+在LinkedList文件中添加以下方法:
+```
+public mutating func push(_ value: Value) {
+  head = Node(value: value, next: head) 
+  if tail == nil {
+    tail = head
+  }
+}
+```
+在 push 进空列表的情况下，新节点同时拥有列表的头和尾。
+回到 *playground* 页面，添加以下内容:
+```
+example(of: "push") {
+  var list = LinkedList<Int>() 
+  list.push(3)
+  list.push(2) 
+  list.push(1)
+  print(list)
+}
+```
+
+您的控制台输出应该显示以下内容:
+`1->2->3  `
+
+### append
+您将看到的下一个操作是 *append*。这意味着在列表末尾添加一个值，称为尾端插入。
+回到LinkedList.swift，在下面添加以下代码 *push*:
+```
+public mutating func append(_ value: Value) {
+  // 1
+  guard !isEmpty else { 
+    push(value)
+    return
+  }
+  // 2
+  tail!.next = Node(value: value)
+  // 3
+  tail = tail!.next
+}
+```
+
+这段代码相对简单:
+
+1. 与之前一样，如果列表为空，则需要将head和tail更新到新节点。由于在空列表中 *append* 与 *push* 在功能上是相同的，所以只需调用 *push* 就可以为你完成这项工作。
+2. 在所有其他情况下，只需在尾节点之后创建一个新节点。强制展开保证成功，因为您使用上面的保护语句在 *isEmpty* 情况下进行了 *push* 操作。
+3. 由于这是尾端插入，所以新节点也是列表的尾节点。
+
+回到 *playground* ，在底部添加以下内容:
+```
+example(of: "append") {
+  var list = LinkedList<Int>() 
+  list.append(1) 
+  list.append(2) 
+  list.append(3)
+  print(list)
+}
+```
+
+会在控制台中看到以下输出:
+`1->2->3`
+
+### insert(after:)
+
+添加值的第三个也是最后一个操作是 `insert(after:)`。该操作在列表的特定位置插入一个值，需要两个步骤:
+1. 在列表中找到特定节点。
+2. 插入新节点。
+
+首先，实现代码来查找要插入值的节点。
+回到LinkedList.swift文件，在 `append` 下面添加以下代码:
+```
+public func node(at index: Int) -> Node<Value>? {
+  // 1
+  var currentNode = head
+  var currentIndex = 0
+  // 2
+  while currentNode != nil && currentIndex < index {
+    currentNode = currentNode!.next
+    currentIndex += 1
+  }
+  return currentNode
+}
+```
